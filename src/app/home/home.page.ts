@@ -53,4 +53,14 @@ export class HomePage {
   public borrarAnimal(index: number) {
     this.animales.splice(index, 1);
   }
+
+  public doRefresh(event: any) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.animales = Object.assign([], ANIMALES);
+      event.target.complete();
+    }, 1500);
+  }
 }
