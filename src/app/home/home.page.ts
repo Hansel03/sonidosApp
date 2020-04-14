@@ -49,4 +49,8 @@ export class HomePage {
       }
     }
   }
+
+  public borrarAnimal(index: number) {
+    this.animales.splice(index, 1);
+  }
 }
