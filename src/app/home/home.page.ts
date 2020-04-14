@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ANIMALES } from '../data/data.animales';
+import { AnimalInterface } from '../interfaces/animal.interface';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  animales: AnimalInterface[];
 
-  constructor() {}
-
+  constructor() {
+    this.animales = Object.assign([], ANIMALES);
+  }
 }
