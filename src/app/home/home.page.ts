@@ -9,6 +9,8 @@ import { AnimalInterface } from '../interfaces/animal.interface';
 })
 export class HomePage {
   animales: AnimalInterface[];
+  audio = new Audio();
+  audioTiempo: any;
 
   constructor() {
     this.animales = Object.assign([], ANIMALES);
@@ -16,15 +18,35 @@ export class HomePage {
 
   public reproducir(animal: AnimalInterface) {
     console.log(animal);
-    const audio = new Audio();
-    audio.src = animal.audio;
-    audio.load();
-    audio.play();
+
+    this.pausarAudio(animal);
+
+    if (animal.reproduciendo) {
+      animal.reproduciendo = false;
+      return;
+    }
+
+    this.audio.src = animal.audio;
+    this.audio.load();
+    this.audio.play();
 
     animal.reproduciendo = true;
 
-    setTimeout(() => {
+    this.audioTiempo = setTimeout(() => {
       animal.reproduciendo = false;
     }, animal.duracion * 1000);
+  }
+
+  private pausarAudio(animalSel: AnimalInterface) {
+    clearTimeout(this.audioTiempo);
+
+    this.audio.pause();
+    this.audio.currentTime = 0;
+
+    for (const animal of this.animales) {
+      if (animal.nombre !== animalSel.nombre) {
+        animal.reproduciendo = false;
+      }
+    }
   }
 }
