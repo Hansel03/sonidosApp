@@ -13,4 +13,18 @@ export class HomePage {
   constructor() {
     this.animales = Object.assign([], ANIMALES);
   }
+
+  public reproducir(animal: AnimalInterface) {
+    console.log(animal);
+    const audio = new Audio();
+    audio.src = animal.audio;
+    audio.load();
+    audio.play();
+
+    animal.reproduciendo = true;
+
+    setTimeout(() => {
+      animal.reproduciendo = false;
+    }, animal.duracion * 1000);
+  }
 }
