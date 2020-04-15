@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ANIMALES } from '../data/data.animales';
 import { AnimalInterface } from '../interfaces/animal.interface';
+import { IonReorderGroup } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +12,11 @@ export class HomePage {
   animales: AnimalInterface[];
   audio = new Audio();
   audioTiempo: any;
+  ordenando: boolean;
 
   constructor() {
     this.animales = Object.assign([], ANIMALES);
+    this.ordenando = true;
   }
 
   public reproducir(animal: AnimalInterface) {
@@ -62,5 +65,17 @@ export class HomePage {
       this.animales = Object.assign([], ANIMALES);
       event.target.complete();
     }, 1500);
+  }
+
+  public reordenarAnimales(ev: any): void {
+    // The `from` and `to` properties contain the index of the item
+    // when the drag started and ended, respectively
+    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
+
+    // Finish the reorder and position the item in the DOM based on
+    // where the gesture ended. This method can also be called directly
+    // by the reorder group
+    // ev.detail.complete();
+    this.animales = ev.detail.complete(this.animales);
   }
 }
